@@ -1,0 +1,66 @@
+@startuml
+package CreationService {
+  class ShoppingTaskController {
+    + createShoppingTask(ShoppingTaskDto)
+  }
+  class ShoppingTaskCreateService {
+    + createTask(ShoppingTaskDto)
+  }
+
+  class ShoppingTaskDto {
+    String itemName
+    Integer quantity
+  }
+
+  class ShoppingTaskFactory {
+    + createShoppingTask(ShoppingTaskDto)
+  }
+  package AggregateModel{
+    class ShoppingTask {
+      ItemToBuy item
+      TaskExecutionDate date
+      NotificationStatus status
+    }
+  }
+  interface IShoppingTaskRepository {
+
+  }
+
+  ShoppingTaskController - ShoppingTaskDto : given via REST
+  ShoppingTaskController -- "1" ShoppingTaskCreateService : > use
+  ShoppingTaskCreateService  - "1" ShoppingTaskFactory : > use
+  ShoppingTaskCreateService  -- IShoppingTaskRepository
+  ShoppingTaskFactory --> ShoppingTask : > create
+  IShoppingTaskRepository - ShoppingTask : < save
+}
+
+package NotificationService {
+  interface IMailSenderService {
+    + sendToUser()
+  }
+  class MailSenderServiceImpl {
+    + sendToUser()
+  }
+  class GMailSenderServiceImpl {
+    + sendToUser()
+  }
+  class MailSenderServiceConfig {
+    + createBeans()
+  }
+  class MailServiceCollector {
+    + findMailSenderService()
+  }
+  IMailSenderService <|-- MailSenderServiceImpl
+  IMailSenderService <|-- GMailSenderServiceImpl
+  IMailSenderService <- MailServiceCollector
+  MailSenderServiceConfig -- MailServiceCollector : < use
+
+
+  class ShoppingTaskNotifierService {
+    + notifyShoppingTasks()
+  }
+
+  IShoppingTaskRepository -- ShoppingTaskNotifierService : < use
+  ShoppingTaskNotifierService -- IMailSenderService
+}
+@enduml
