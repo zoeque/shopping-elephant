@@ -1,0 +1,10 @@
+@startuml
+actor User as user
+(Write down what to buy) as (theme)
+(Register your shopping list from the screen) as (register)
+(Send e-mail to notify the shopping list) as (notify)
+
+user -> (theme)
+user --> (register)
+user <-- (notify)
+@enduml
