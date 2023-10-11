@@ -2,11 +2,9 @@
 class ShoppingTask {
   ItemToBuy item
   TaskExecutionDate date
-  NotificationStatus status
+  NotificationStatusModel status
 }
-class NotificationStatus {
-  NotificationStatusModel model
-}
+
 enum NotificationStatusModel { 
   PLANNED
   REPORTED
@@ -20,6 +18,5 @@ class TaskExecutionDate {
 
 ShoppingTask o-- ItemToBuy
 ShoppingTask o-- TaskExecutionDate
-ShoppingTask o-- NotificationStatus
-NotificationStatus --> NotificationStatusModel
+ShoppingTask --> NotificationStatusModel
 @enduml
