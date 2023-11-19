@@ -1,4 +1,4 @@
-package zoeque.elephant.usecase.service;
+package zoeque.elephant.usecase.service.mailer;
 
 import io.micrometer.common.util.StringUtils;
 import java.util.concurrent.atomic.AtomicReference;
