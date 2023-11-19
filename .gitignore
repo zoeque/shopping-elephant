@@ -38,3 +38,6 @@ out/
 
 ### H2 Database ###
 /h2db
+
+## Project settings
+!**/*-dev.properties

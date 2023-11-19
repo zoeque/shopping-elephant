@@ -1,20 +1,24 @@
-package zoeque.elephant.usecase.service;
+package zoeque.elephant.usecase.service.mailer;
 
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import zoeque.elephant.configuration.MailServiceCollector;
 import zoeque.elephant.domain.model.MailService;
 import zoeque.elephant.domain.model.MailServiceProviderModel;
 
 @Slf4j
+@EnableAsync
 @Service
 @MailService(MailServiceProviderModel.GMAIL)
 public class GmailSenderService extends AbstractMailSenderService {
   private MailSender sender;
+
   public GmailSenderService(@Value("${zoeque.elephant.mail.address.to:null}")
                             String toMailAddress,
                             @Value("${zoeque.elephant.mail.address.from:null}")
@@ -27,6 +31,7 @@ public class GmailSenderService extends AbstractMailSenderService {
     this.sender = sender;
   }
 
+  @Async
   @Override
   public Try<String> sendMailToUser(String subject, String messageContent) {
     try {

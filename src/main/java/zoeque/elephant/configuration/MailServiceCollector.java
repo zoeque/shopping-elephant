@@ -4,7 +4,7 @@ import io.vavr.control.Try;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Component;
 import zoeque.elephant.domain.model.MailServiceProviderModel;
-import zoeque.elephant.usecase.service.IMailService;
+import zoeque.elephant.usecase.service.mailer.IMailService;
 
 /**
  * The class to find the mail service to use

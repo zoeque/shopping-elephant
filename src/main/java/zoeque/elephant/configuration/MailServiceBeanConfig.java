@@ -10,7 +10,7 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.stereotype.Component;
 import zoeque.elephant.domain.model.MailService;
 import zoeque.elephant.domain.model.MailServiceProviderModel;
-import zoeque.elephant.usecase.service.IMailService;
+import zoeque.elephant.usecase.service.mailer.IMailService;
 
 /**
  * The configuration class to collect {@link IMailService}.
