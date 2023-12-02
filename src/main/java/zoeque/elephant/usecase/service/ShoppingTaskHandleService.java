@@ -16,7 +16,8 @@ import zoeque.elephant.usecase.dto.ShoppingTaskDto;
  */
 @Slf4j
 @Service
-public class ShoppingTaskHandleService {
+public class ShoppingTaskHandleService
+        extends AbstractShoppingTaskNotifierService {
   ShoppingTaskFactory factory;
   IShoppingTaskRepository repository;
 
