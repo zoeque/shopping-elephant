@@ -2,9 +2,7 @@ package zoeque.elephant.usecase.service;
 
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import zoeque.elephant.configuration.SettingConfiguration;
 import zoeque.elephant.domain.entity.ShoppingTask;
 import zoeque.elephant.domain.factory.ShoppingTaskFactory;
 import zoeque.elephant.domain.repository.IShoppingTaskRepository;
@@ -18,8 +16,7 @@ import zoeque.elephant.usecase.dto.ShoppingTaskDto;
  */
 @Slf4j
 @Service
-public class ShoppingTaskHandleService
-        extends AbstractShoppingTaskNotifierService {
+public class ShoppingTaskHandleService {
   ShoppingTaskFactory factory;
   IShoppingTaskRepository repository;
 
@@ -48,11 +45,5 @@ public class ShoppingTaskHandleService
       log.warn("Cannot save the shopping task instance in DB : {}", e.getCause());
       return Try.failure(e);
     }
-  }
-
-  @Override
-  @Scheduled(cron = SettingConfiguration.CRON_FOR_NOTIFICATION)
-  public void notifyToUser() {
-    super.notifyToUser();
   }
 }
