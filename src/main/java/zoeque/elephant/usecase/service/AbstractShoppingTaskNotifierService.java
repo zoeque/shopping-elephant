@@ -4,28 +4,31 @@ import io.vavr.control.Try;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import zoeque.elephant.domain.entity.ShoppingTask;
-import zoeque.elephant.domain.model.NotificationMessageBuildService;
+import zoeque.elephant.domain.model.MessageModel;
 import zoeque.elephant.domain.repository.IShoppingTaskRepository;
 import zoeque.elephant.domain.specification.ShoppingTaskSpecification;
 import zoeque.elephant.usecase.dto.ShoppingTaskDto;
+import zoeque.mailer.application.event.MailRequestEvent;
 
 @Slf4j
 public abstract class AbstractShoppingTaskNotifierService
         implements IShoppingTaskHandleService {
+  @Value("${zoeque.elephant.mail.address.to}")
+  String mailTo;
+  @Value("${zoeque.elephant.mail.address.from}")
+  String mailFrom;
   IShoppingTaskRepository repository;
   ShoppingTaskSpecification specification;
-  NotificationMessageBuildService builder;
   ApplicationEventPublisher publisher;
 
   public AbstractShoppingTaskNotifierService(IShoppingTaskRepository repository,
                                              ShoppingTaskSpecification specification,
-                                             NotificationMessageBuildService builder,
                                              ApplicationEventPublisher publisher) {
     this.repository = repository;
     this.specification = specification;
-    this.builder = builder;
     this.publisher = publisher;
   }
 
@@ -39,7 +42,14 @@ public abstract class AbstractShoppingTaskNotifierService
         itemsToNotify.stream().forEach(item -> {
           dtoList.add(convertEntityToDto(item).get());
         });
-        Try<String> message = builder.buildMessage(dtoList);
+        String message
+                = MessageModel.messageBuilder.apply(dtoList);
+        publisher.publishEvent(new MailRequestEvent(
+                MessageModel.SUBJECT,
+                message,
+                mailFrom,
+                mailTo
+        ));
       }
     } catch (Exception e) {
       log.warn("Cannot notify to the user : {}", e.toString());

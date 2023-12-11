@@ -1,11 +1,10 @@
 package zoeque.elephant.domain.model;
 
-import io.vavr.control.Try;
 import java.util.List;
+import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import zoeque.elephant.configuration.ShoppingElephantConstants;
-import zoeque.elephant.domain.entity.ShoppingTask;
 import zoeque.elephant.usecase.dto.ShoppingTaskDto;
 
 /**
@@ -14,20 +13,21 @@ import zoeque.elephant.usecase.dto.ShoppingTaskDto;
  */
 @Slf4j
 @Service
-public class NotificationMessageBuildService {
+public class MessageModel {
 
   /**
-   * The message builder with the template message.
-   *
-   * @return String type message with the result {@link Try}.
+   * The message builder based on given list of task
    */
-  public Try<String> buildMessage(List<? extends ShoppingTaskDto> tasks) {
+  public static final Function<List<? extends ShoppingTaskDto>, String>
+          messageBuilder = list -> {
     StringBuilder sb = new StringBuilder();
     sb.append(ShoppingElephantConstants.MESSAGE_TEMPLATE);
-    tasks.stream().forEach(task -> {
+    list.stream().forEach(task -> {
       sb.append(task.itemName());
       sb.append("\r\n");
     });
-    return Try.success(sb.toString());
-  }
+    return sb.toString();
+  };
+
+  public static final String SUBJECT = "今日の買い物リスト";
 }
