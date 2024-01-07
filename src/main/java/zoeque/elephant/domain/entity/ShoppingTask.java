@@ -1,5 +1,6 @@
 package zoeque.elephant.domain.entity;
 
+import io.vavr.control.Try;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,9 +30,14 @@ public class ShoppingTask {
   public ShoppingTask(ItemToBuy itemToBuy,
                       TaskExecutionDate executionDate,
                       NotificationStatusModel status) {
-    this.itemToBuy = itemToBuy;
-    this.executionDate = executionDate;
-    this.status = status;
+    setItemToBuy(itemToBuy);
+    setExecutionDate(executionDate);
+    setStatus(status);
+  }
+
+  public Try<ShoppingTask> updateStatus() {
+    this.status = NotificationStatusModel.REPORTED;
+    return Try.success(this);
   }
 
   private void setItemToBuy(ItemToBuy itemToBuy) {

@@ -33,7 +33,7 @@ public abstract class AbstractShoppingTaskNotifierService
   }
 
   @Override
-  public void notifyToUser() {
+  public Try<List<ShoppingTask>> notifyToUser() {
     try {
       List<ShoppingTask> itemsToNotify
               = repository.findAll(specification.itemToNotify());
@@ -51,6 +51,7 @@ public abstract class AbstractShoppingTaskNotifierService
                 mailTo
         ));
       }
+      return Try.success(itemsToNotify);
     } catch (Exception e) {
       log.warn("Cannot notify to the user : {}", e.toString());
       throw new IllegalStateException(e);
