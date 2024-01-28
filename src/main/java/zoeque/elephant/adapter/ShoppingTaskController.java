@@ -1,6 +1,7 @@
 package zoeque.elephant.adapter;
 
 import io.vavr.control.Try;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,16 @@ public class ShoppingTaskController {
       return ResponseEntity.ok().body(json);
     } catch (Exception e) {
       log.warn("Cannot save the shopping task : {}", json);
+      return ResponseEntity.badRequest().body(e);
+    }
+  }
+
+  @PostMapping("/find")
+  public ResponseEntity findAll() {
+    try {
+      Try<List<ShoppingTaskDto>> all = handleService.findAll();
+      return ResponseEntity.ok().body(all.get());
+    } catch (Exception e) {
       return ResponseEntity.badRequest().body(e);
     }
   }
