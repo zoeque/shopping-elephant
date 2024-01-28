@@ -1,6 +1,10 @@
 package zoeque.elephant.usecase.service;
 
 import io.vavr.control.Try;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import zoeque.elephant.domain.entity.ShoppingTask;
@@ -45,5 +49,28 @@ public class ShoppingTaskHandleService {
       log.warn("Cannot save the shopping task instance in DB : {}", e.getCause());
       return Try.failure(e);
     }
+  }
+
+  public Try<List<ShoppingTaskDto>> findAll() {
+    try {
+      List<ShoppingTask> allEntity = repository.findAll();
+      List<ShoppingTaskDto> dtoList = new ArrayList<>();
+      allEntity.stream().forEach(entity -> {
+        ShoppingTaskDto dto = new ShoppingTaskDto(
+                entity.getItemToBuy().getName(),
+                convertLocalDateTimeToString(entity.getExecutionDate().getDateTime())
+        );
+        dtoList.add(dto);
+      });
+      return Try.success(dtoList);
+    } catch (Exception e) {
+      log.warn("Cannot find all tasks in DB");
+      return Try.failure(e);
+    }
+  }
+
+  private String convertLocalDateTimeToString(LocalDateTime localDateTime) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    return localDateTime.format(formatter);
   }
 }
