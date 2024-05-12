@@ -1,32 +1,86 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react';
+import { FC } from 'react'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import './App.css'
+import Pulldown from './component/Pulldown';
+import CreateButton from './component/CreateButton'
+import { sendPostRequest } from './controller/StoredItemController';
+import { Link } from "react-router-dom";
+import ja from "date-fns/locale/ja"
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: FC = () => {
+  const today = new Date();
+  registerLocale("ja", ja);
+
+  const [inputItemName, setItemName] = useState('');
+  const [inputItemType, setItemType] = useState('others');
+  const [inputExpiredDate, setExpiredDate] = React.useState(today);
+
+  const setTodayAsFormatted = () => {
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return year + "/" + month + "/" + day;
+  }
+  const [expiredDateToSend, setExpiredDateToSend] = useState(setTodayAsFormatted);
+
+  const handleItemName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setItemName(event.target.value);
+  };
+
+  const handleItemType = (selectedItemType: string) => {
+    setItemType(selectedItemType);
+  };
+
+  const handleSelectedDate = (date: Date) => {
+    setExpiredDate(date || today);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    setExpiredDateToSend(year + "/" + month + "/" + day);
+    return year + "/" + month + "/" + day;
+  }
 
   return (
     <>
+      <h1>Shopping Elephant</h1>
+      <p>
+        購入予定の物品を以下フォームから登録してください。
+      </p>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <input type="itemName" placeholder="対象商品名" value={inputItemName} onChange={handleItemName} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div>
+        <Pulldown
+          onRowSelect={handleItemType}
+        />
+      </div>
+      <div>
+        <DatePicker
+          dateFormat="yyyy/MM/dd"
+          selected={inputExpiredDate}
+          locale="ja"
+          minDate={today}
+          onChange={selectedDate => { handleSelectedDate(selectedDate || today) }}
+          placeholderText="日付を選択"
+        />
+      </div>
+      <div>
+        <CreateButton
+          itemName={inputItemName}
+          itemType={inputItemType}
+          expiredDate={expiredDateToSend}
+          sendPostRequest={sendPostRequest} />
+      </div>
+      <div>
+        <nav>
+          <Link to="/storedItemList">一覧表示</Link>
+        </nav>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        Created by zoeque. See <a href="https://github.com/zoeque">GitHub</a> for a detail.
       </p>
     </>
   )
