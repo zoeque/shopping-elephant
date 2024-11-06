@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import './components.css'
 import '../controller/StoredItemController'
+import React from 'react';
 
 function CreateButton({ 
-    itemName, itemType, expiredDate, sendPostRequest 
+    itemName, executionDate, sendPostRequest 
 }:{
     itemName: string;
-    itemType: string;
-    expiredDate: string;
-    sendPostRequest: (itemName: string, itemType: string, expiredDate: string) => void;
+    executionDate: string;
+    sendPostRequest: (itemName: string, executionDate: string) => void;
 }) {
 
     const [message, setMessage] = useState('');
@@ -25,7 +25,7 @@ function CreateButton({
                 return;
             }
             {/** Send StoredItem as JSON after the validation */ }
-            sendPostRequest(itemName, itemType, expiredDate);
+            sendPostRequest(itemName, executionDate);
             setMessage(itemName + 'を登録しました。')
         } catch (e) {
             setMessage("予期せぬエラーが発生しました。エラー：" + e);

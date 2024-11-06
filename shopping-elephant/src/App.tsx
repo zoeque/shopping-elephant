@@ -15,8 +15,7 @@ const App: FC = () => {
   registerLocale("ja", ja);
 
   const [inputItemName, setItemName] = useState('');
-  const [inputItemType, setItemType] = useState('others');
-  const [inputExpiredDate, setExpiredDate] = React.useState(today);
+  const [inputExecutionDate, setExecutionDate] = React.useState(today);
 
   const setTodayAsFormatted = () => {
     const year = today.getFullYear();
@@ -24,22 +23,18 @@ const App: FC = () => {
     const day = String(today.getDate()).padStart(2, '0');
     return year + "/" + month + "/" + day;
   }
-  const [expiredDateToSend, setExpiredDateToSend] = useState(setTodayAsFormatted);
+  const [executionDateToSend, setExecutionDateToSend] = useState(setTodayAsFormatted);
 
   const handleItemName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setItemName(event.target.value);
   };
 
-  const handleItemType = (selectedItemType: string) => {
-    setItemType(selectedItemType);
-  };
-
   const handleSelectedDate = (date: Date) => {
-    setExpiredDate(date || today);
+    setExecutionDate(date || today);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
-    setExpiredDateToSend(year + "/" + month + "/" + day);
+    setExecutionDateToSend(year + "/" + month + "/" + day);
     return year + "/" + month + "/" + day;
   }
 
@@ -50,17 +45,12 @@ const App: FC = () => {
         購入予定の物品を以下フォームから登録してください。
       </p>
       <div>
-        <input type="itemName" placeholder="対象商品名" value={inputItemName} onChange={handleItemName} />
-      </div>
-      <div>
-        <Pulldown
-          onRowSelect={handleItemType}
-        />
+        <input type="itemName" placeholder="購入商品名" value={inputItemName} onChange={handleItemName} />
       </div>
       <div>
         <DatePicker
           dateFormat="yyyy/MM/dd"
-          selected={inputExpiredDate}
+          selected={inputExecutionDate}
           locale="ja"
           minDate={today}
           onChange={selectedDate => { handleSelectedDate(selectedDate || today) }}
@@ -70,8 +60,7 @@ const App: FC = () => {
       <div>
         <CreateButton
           itemName={inputItemName}
-          itemType={inputItemType}
-          expiredDate={expiredDateToSend}
+          executionDate={executionDateToSend}
           sendPostRequest={sendPostRequest} />
       </div>
       <div>
