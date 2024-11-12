@@ -43,4 +43,24 @@ public class ShoppingTaskSpecification {
       }
     };
   }
+
+  /**
+   * The specification that is already reported and need to delete.
+   *
+   * @return The specification with the above status.
+   */
+  public Specification<ShoppingTask> itemToDelete() {
+    return new Specification<ShoppingTask>() {
+      @Override
+      public Predicate toPredicate(Root<ShoppingTask> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(criteriaBuilder.lessThan(root.get(ShoppingTask_.EXECUTION_DATE)
+                .get(TaskExecutionDate_.DATE_TIME), LocalDateTime.now()));
+
+        predicates.add(criteriaBuilder.equal(root.get(ShoppingTask_.STATUS),
+                NotificationStatusModel.REPORTED));
+        return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+      }
+    };
+  }
 }
