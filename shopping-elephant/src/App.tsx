@@ -4,9 +4,8 @@ import { FC } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './App.css'
-import Pulldown from './component/Pulldown';
 import CreateButton from './component/CreateButton'
-import { sendPostRequest } from './controller/StoredItemController';
+import { sendPostRequest } from './controller/ShoppingTaskController';
 import { Link } from "react-router-dom";
 import ja from "date-fns/locale/ja"
 
