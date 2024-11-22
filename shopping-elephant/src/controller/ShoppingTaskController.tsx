@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const sendPostRequest = async (itemName: string, itemType: string, expiredDate: string) => {
+export const sendPostRequest = async (itemName: string, executionDate: string) => {
 
     try {
          await axios.post('http://localhost:8080/create', {
