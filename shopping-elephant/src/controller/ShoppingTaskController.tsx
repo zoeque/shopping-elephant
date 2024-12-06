@@ -5,8 +5,7 @@ export const sendPostRequest = async (itemName: string, executionDate: string) =
     try {
          await axios.post('http://localhost:8080/create', {
             itemName: itemName,
-            itemType: itemType,
-            expiredDate: expiredDate
+            executionDate: executionDate
         });
     } catch (error) {
         console.warn(error);
