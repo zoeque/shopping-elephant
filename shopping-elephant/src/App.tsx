@@ -64,7 +64,7 @@ const App: FC = () => {
       </div>
       <div>
         <nav>
-          <Link to="/storedItemList">一覧表示</Link>
+          <Link to="/shoppingTaskList">一覧表示</Link>
         </nav>
       </div>
       <p className="read-the-docs">
