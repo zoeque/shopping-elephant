@@ -7,15 +7,14 @@ const isError = (error: unknown): error is Error => {
   return error instanceof Error;
 };
 
-interface StoredItem {
+interface ShoppingTask {
   itemName: string;
-  itemType: string;
-  expiredDate: string;
+  executionDate: string;
 }
 
-export const StoredItemList: FC = () => {
+export const ShoppingTaskList: FC = () => {
 
-  const [item, setItem] = useState<StoredItem[]>([]);
+  const [item, setItem] = useState<ShoppingTask[]>([]);
   const [error, setError] = useState<Error | undefined>(undefined);
 
 
@@ -23,7 +22,7 @@ export const StoredItemList: FC = () => {
     return <div>{error.message}</div>;
   }
 
-  const fetchStoredItem = useCallback(async () => {
+  const fetchShoppingTask = useCallback(async () => {
     try {
       axios.get("http://localhost:8080/find")
         .then((res) => {
@@ -38,25 +37,23 @@ export const StoredItemList: FC = () => {
 
 
   useEffect(() => {
-    fetchStoredItem();
-  }, [fetchStoredItem]);
+    fetchShoppingTask();
+  }, [fetchShoppingTask]);
 
   return (
     <div>
       <h2>一覧表示</h2>
       <Link to="/">戻る</Link>
-      <div onLoad={fetchStoredItem}>
+      <div onLoad={fetchShoppingTask}>
         <table className="table">
           <tr>
             <th>品名</th>
-            <th>種目</th>
-            <th>消費期限</th>
+            <th>購入予定日</th>
           </tr>
           {item.map((storedItem) => (
             <tr>
               <td>{storedItem.itemName}</td>
-              <td>{storedItem.itemType}</td>
-              <td>{storedItem.expiredDate}</td>
+              <td>{storedItem.executionDate}</td>
             </tr>
           ))}
         </table>
