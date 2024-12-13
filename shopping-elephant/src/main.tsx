@@ -6,11 +6,11 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { StoredItemList } from './screens/StoredItemList.tsx';
+import { ShoppingTaskList } from './screens/ShoppingTaskList.tsx';
 
 export const router = createBrowserRouter([
   { path: "/", element: <App /> },
-  { path: "storedItemList", element: <StoredItemList /> },
+  { path: "shoppingTaskList", element: <ShoppingTaskList /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
