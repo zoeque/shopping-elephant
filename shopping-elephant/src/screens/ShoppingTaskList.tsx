@@ -50,10 +50,10 @@ export const ShoppingTaskList: FC = () => {
             <th>品名</th>
             <th>購入予定日</th>
           </tr>
-          {item.map((storedItem) => (
+          {item.map((shoppingTask) => (
             <tr>
-              <td>{storedItem.itemName}</td>
-              <td>{storedItem.executionDate}</td>
+              <td>{shoppingTask.itemName}</td>
+              <td>{shoppingTask.executionDate}</td>
             </tr>
           ))}
         </table>
