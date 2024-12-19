@@ -31,13 +31,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'com.h2database:h2:2.2.220'
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.hibernate:hibernate-jpamodelgen:6.1.7.Final'
-	implementation 'zoeque.mailer:mailagentjava:1.0.0'
+	implementation 'com.google.apis:google-api-services-gmail:v1-rev110-1.25.0'
 
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
 
