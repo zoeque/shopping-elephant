@@ -18,7 +18,7 @@ import zoeque.elephant.domain.valueobject.TaskExecutionDate_;
  * The entity specification for {@link ShoppingTask}.
  */
 @Component
-public class ShoppingTaskSpecification {
+public class ShoppingTaskSpecification<ShoppingTask> {
 
   /**
    * The specification that is not reported and

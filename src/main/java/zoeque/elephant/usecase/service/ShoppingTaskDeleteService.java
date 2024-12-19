@@ -1,6 +1,6 @@
 package zoeque.elephant.usecase.service;
 
-import java.util.Optional;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class ShoppingTaskDeleteService {
 
   IShoppingTaskRepository repository;
 
-  ShoppingTaskSpecification specification;
+  ShoppingTaskSpecification<ShoppingTask> specification;
 
   public ShoppingTaskDeleteService(IShoppingTaskRepository repository,
                                    ShoppingTaskSpecification specification) {
@@ -30,8 +30,8 @@ public class ShoppingTaskDeleteService {
    */
   @Scheduled(cron = "0 0 1 * * ?")
   public void delete() {
-    Optional<ShoppingTask> itemToDelete = repository.findAll(specification);
-    if (itemToDelete.isPresent()) {
+    List<ShoppingTask> itemToDelete = repository.findAll(specification.itemToDelete());
+    if (!itemToDelete.isEmpty()) {
       itemToDelete.stream().forEach(item -> {
         repository.delete(item);
       });
