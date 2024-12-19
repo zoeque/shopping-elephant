@@ -35,7 +35,7 @@ public class ShoppingTaskDeleteServiceTest {
   @Test
   public void givenExpiredItem_whenDelete_noItemsInDb() {
     // save test data
-    repository.save(new ShoppingTask(new ItemToBuy("test"), new TaskExecutionDate(LocalDateTime.now().minusDays(1)), NotificationStatusModel.REPORTED);
+    repository.save(new ShoppingTask(new ItemToBuy("test"), new TaskExecutionDate(LocalDateTime.now().minusDays(1)), NotificationStatusModel.REPORTED));
     Assertions.assertEquals(1, repository.findAll().size());
 
     // attempt to delete
