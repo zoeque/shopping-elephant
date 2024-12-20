@@ -51,6 +51,10 @@ public class ShoppingTaskHandleService {
     }
   }
 
+  /**
+   * Find all tasks in DB.
+   * @return List of {@link ShoppingTaskDto} with {@link Try}.
+   */
   public Try<List<ShoppingTaskDto>> findAll() {
     try {
       List<ShoppingTask> allEntity = repository.findAll();
@@ -69,6 +73,11 @@ public class ShoppingTaskHandleService {
     }
   }
 
+  /**
+   * Convert LocalDateTime to String.
+   * @param localDateTime LocalDateTime instance.
+   * @return String formatted date.
+   */
   private String convertLocalDateTimeToString(LocalDateTime localDateTime) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     return localDateTime.format(formatter);
