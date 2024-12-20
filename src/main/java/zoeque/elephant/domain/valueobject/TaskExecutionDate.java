@@ -21,8 +21,8 @@ public class TaskExecutionDate {
   private void setDateTime(LocalDateTime dateTime) {
     if (dateTime == null) {
       throw new IllegalArgumentException("Execution date must not be null");
-    } else if (dateTime.isBefore(LocalDateTime.now())) {
-      throw new IllegalArgumentException("Execution date must not be set before today : "
+    } else if (dateTime.isBefore(LocalDateTime.now().minusDays(1))) {
+      throw new IllegalArgumentException("Execution date must not be set before yesterday : "
               + dateTime);
     }
     this.dateTime = dateTime;
