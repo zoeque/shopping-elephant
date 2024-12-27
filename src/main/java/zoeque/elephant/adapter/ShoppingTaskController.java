@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,9 @@ public class ShoppingTaskController {
   public ResponseEntity create(@RequestBody
                                ShoppingTaskDto json) {
     try {
+      // attempt to create new shopping task instance.
       Try<ShoppingTaskDto> creationTry = handleService.create(json);
+
       if (creationTry.isFailure()) {
         throw new IllegalStateException(creationTry.getCause());
       }
@@ -51,9 +54,10 @@ public class ShoppingTaskController {
     }
   }
 
-  @PostMapping("/find")
+  @GetMapping("/find")
   public ResponseEntity findAll() {
     try {
+      // attempt to find all shopping tasks.
       Try<List<ShoppingTaskDto>> all = handleService.findAll();
       return ResponseEntity.ok().body(all.get());
     } catch (Exception e) {
