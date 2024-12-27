@@ -14,7 +14,7 @@ The application provides the function of;
 It prevents the inadvertent mistake of saying, "I should have bought it then".  
 
 ## User Interface
-**TBD**
+![](./design/images/topscreen.png)
 
 ## Controller
 The Controller obtains registered item information via REST, and the JSON-deserialized information is passed to the Service layer.
@@ -28,7 +28,9 @@ This application is built with the environment bellow;
 - embedded H2DB 2.2.220
 
 ### Front end
-**TBD**
+- Vite 4.4.9
+- React
+- TypeScript
 
 ### Architecture
 ![](./design/images/service_model.png)  
