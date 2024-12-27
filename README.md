@@ -16,6 +16,19 @@ It prevents the inadvertent mistake of saying, "I should have bought it then".
 ## User Interface
 ![](./design/images/topscreen.png)
 
+## Specification of application.properties
+The `zoeque.elephant.notify.cron` property is used to set the time to notify the user of the item to be purchased.  
+The default value is `0 0 12 * * *`, which means that the notification is sent at 12:00 every day.
+
+```properties
+zoeque.elephant.mail.address.to=
+zoeque.elephant.mail.address.from=
+zoeque.elephant.mail.provider=
+```
+These are the parameters for sending mail.  
+`zoeque.elephant.mail.provider` is the mail provider, and the value is `gmail` or `others`.
+
+
 ## Controller
 The Controller obtains registered item information via REST, and the JSON-deserialized information is passed to the Service layer.
 
