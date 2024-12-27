@@ -38,11 +38,13 @@ public class ShoppingTaskHandleService {
    */
   public Try<ShoppingTaskDto> create(ShoppingTaskDto dto) {
     try {
+      // create shopping task entity instance.
       Try<ShoppingTask> shoppingTaskTry = factory.create(dto);
       if (shoppingTaskTry.isFailure()) {
         // failed to create new shopping task instance.
         return Try.failure(shoppingTaskTry.getCause());
       }
+      // save the shopping task instance in DB.
       repository.save(shoppingTaskTry.get());
       return Try.success(dto);
     } catch (Exception e) {
@@ -57,8 +59,11 @@ public class ShoppingTaskHandleService {
    */
   public Try<List<ShoppingTaskDto>> findAll() {
     try {
+      // find all tasks in DB.
       List<ShoppingTask> allEntity = repository.findAll();
       List<ShoppingTaskDto> dtoList = new ArrayList<>();
+
+      // convert entity to dto.
       allEntity.stream().forEach(entity -> {
         ShoppingTaskDto dto = new ShoppingTaskDto(
                 entity.getItemToBuy().getName(),
@@ -66,6 +71,8 @@ public class ShoppingTaskHandleService {
         );
         dtoList.add(dto);
       });
+
+      // return the list of dto.
       return Try.success(dtoList);
     } catch (Exception e) {
       log.warn("Cannot find all tasks in DB");
