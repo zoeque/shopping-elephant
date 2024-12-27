@@ -45,7 +45,7 @@ public class ShoppingTaskFactory {
 
   private Try<LocalDateTime> convertStringDateToLocalDateTime(String dateTime) {
     try {
-      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
       Date formatDate = sdf.parse(dateTime);
       return Try.success(LocalDateTime.ofInstant(formatDate.toInstant(), ZoneId.systemDefault()));
     } catch (Exception e) {
