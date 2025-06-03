@@ -60,8 +60,11 @@ public abstract class AbstractShoppingTaskNotifierService
 
   private Try<ShoppingTaskDto> convertEntityToDto(ShoppingTask taskEntity) {
     return Try.success(
-            new ShoppingTaskDto(taskEntity.getItemToBuy().getName(),
-                    taskEntity.getExecutionDate().toString())
+            new ShoppingTaskDto(
+                    taskEntity.getId(),
+                    taskEntity.getItemToBuy().getName(),
+                    taskEntity.getExecutionDate().toString()
+            )
     );
   }
 }
