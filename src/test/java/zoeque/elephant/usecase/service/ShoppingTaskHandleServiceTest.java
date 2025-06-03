@@ -33,7 +33,7 @@ public class ShoppingTaskHandleServiceTest {
 
   @Test
   public void givenFullSpecifiedDto_creationProcessReturnsSuccess() {
-    ShoppingTaskDto dto = new ShoppingTaskDto("test", "2999/12/31 23:59:59");
+    ShoppingTaskDto dto = new ShoppingTaskDto(Long.valueOf(1), "test", "2999/12/31 23:59:59");
     Try<ShoppingTaskDto> createTry = service.create(dto);
     Assertions.assertTrue(createTry.isSuccess());
 
@@ -46,7 +46,7 @@ public class ShoppingTaskHandleServiceTest {
           "1995/12/3123:59:59",
           "1995/12/31"})
   public void givenInvalidDateSpecifiedDto_creationProcessReturnsFailure(String dateTime) {
-    ShoppingTaskDto dto = new ShoppingTaskDto("test", dateTime);
+    ShoppingTaskDto dto = new ShoppingTaskDto(Long.valueOf(1), "test", dateTime);
     Try<ShoppingTaskDto> createTry = service.create(dto);
     Assertions.assertTrue(createTry.isFailure());
 

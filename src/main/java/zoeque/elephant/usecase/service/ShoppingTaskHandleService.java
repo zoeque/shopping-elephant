@@ -55,6 +55,7 @@ public class ShoppingTaskHandleService {
 
   /**
    * Find all tasks in DB.
+   *
    * @return List of {@link ShoppingTaskDto} with {@link Try}.
    */
   public Try<List<ShoppingTaskDto>> findAll() {
@@ -66,6 +67,7 @@ public class ShoppingTaskHandleService {
       // convert entity to dto.
       allEntity.stream().forEach(entity -> {
         ShoppingTaskDto dto = new ShoppingTaskDto(
+                entity.getId(),
                 entity.getItemToBuy().getName(),
                 convertLocalDateTimeToString(entity.getExecutionDate().getDateTime())
         );
@@ -82,6 +84,7 @@ public class ShoppingTaskHandleService {
 
   /**
    * Convert LocalDateTime to String.
+   *
    * @param localDateTime LocalDateTime instance.
    * @return String formatted date.
    */
