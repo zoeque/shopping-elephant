@@ -8,6 +8,7 @@ const isError = (error: unknown): error is Error => {
 };
 
 interface ShoppingTask {
+  identifier: Int16Array;
   itemName: string;
   executionDate: string;
 }
@@ -47,11 +48,13 @@ export const ShoppingTaskList: FC = () => {
       <div onLoad={fetchShoppingTask}>
         <table className="table">
           <tr>
+            <th>ID</th>
             <th>品名</th>
             <th>購入予定日</th>
           </tr>
           {item.map((shoppingTask) => (
             <tr>
+              <td>{shoppingTask.identifier}</td>
               <td>{shoppingTask.itemName}</td>
               <td>{shoppingTask.executionDate}</td>
             </tr>
