@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  */
 @JsonDeserialize(as = ShoppingTaskDto.class)
 public record ShoppingTaskDto(
-        Long id,
+        Long identifier,
         String itemName,
         String executionDate
 ) {
