@@ -38,7 +38,6 @@ function DropButton({
             if (!validateInputName(itemName)) {
                 return;
             }
-            {/** Send StoredItem as JSON after the validation */ }
             sendPostRequest(identifier, itemName, executionDate);
             setMessage(itemName + 'を削除しました。')
         } catch (e) {

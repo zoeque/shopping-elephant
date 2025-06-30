@@ -16,4 +16,6 @@ import zoeque.elephant.domain.specification.ShoppingTaskSpecification;
 public interface IShoppingTaskRepository extends JpaRepository<ShoppingTask, Long>,
         JpaSpecificationExecutor<ShoppingTask> {
   List<ShoppingTask> findAll(Specification<ShoppingTask> specification);
+
+  List<ShoppingTask> findShoppingTaskById(Long id);
 }
