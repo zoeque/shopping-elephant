@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import zoeque.elephant.domain.entity.ShoppingTask;
-import zoeque.elephant.domain.specification.ShoppingTaskSpecification;
 
 /**
  * The interface for repository to handle {@link ShoppingTask}.
@@ -17,5 +16,5 @@ public interface IShoppingTaskRepository extends JpaRepository<ShoppingTask, Lon
         JpaSpecificationExecutor<ShoppingTask> {
   List<ShoppingTask> findAll(Specification<ShoppingTask> specification);
 
-  List<ShoppingTask> findShoppingTaskById(Long id);
+  Optional<ShoppingTask> findShoppingTaskById(Long id);
 }

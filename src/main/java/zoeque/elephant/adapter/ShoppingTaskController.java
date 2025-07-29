@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import zoeque.elephant.usecase.dto.ShoppingTaskDto;
+import zoeque.elephant.usecase.service.ShoppingTaskDeleteService;
 import zoeque.elephant.usecase.service.ShoppingTaskHandleService;
 
 /**
@@ -25,9 +26,12 @@ import zoeque.elephant.usecase.service.ShoppingTaskHandleService;
 public class ShoppingTaskController {
 
   ShoppingTaskHandleService handleService;
+  ShoppingTaskDeleteService deleteService;
 
-  public ShoppingTaskController(ShoppingTaskHandleService handleService) {
+  public ShoppingTaskController(ShoppingTaskHandleService handleService,
+                                ShoppingTaskDeleteService deleteService) {
     this.handleService = handleService;
+    this.deleteService = deleteService;
   }
 
   /**
@@ -54,12 +58,35 @@ public class ShoppingTaskController {
     }
   }
 
+  /**
+   * The REST endpoint to find all items in DB
+   *
+   * @return The {@link zoeque.elephant.domain.entity.ShoppingTask} in Database
+   */
   @GetMapping("/find")
   public ResponseEntity findAll() {
     try {
       // attempt to find all shopping tasks.
       Try<List<ShoppingTaskDto>> all = handleService.findAll();
       return ResponseEntity.ok().body(all.get());
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e);
+    }
+  }
+
+  /**
+   * The REST endpoint to delete the item
+   *
+   * @param json The item to delete
+   * @return The result to delete item with {@link ShoppingTaskDto}
+   */
+  @PostMapping("/drop")
+  public ResponseEntity delete(@RequestBody
+                               ShoppingTaskDto json) {
+    try {
+      // attempt to delete the item
+      var deleteItem = deleteService.delete(json);
+      return ResponseEntity.ok().body(json);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e);
     }
