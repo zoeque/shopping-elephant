@@ -15,6 +15,7 @@ import zoeque.elephant.domain.repository.IShoppingTaskRepository;
 import zoeque.elephant.domain.valueobject.ItemToBuy;
 import zoeque.elephant.domain.valueobject.TaskExecutionDate;
 import zoeque.elephant.testtool.ShoppingTaskDropForTestService;
+import zoeque.elephant.usecase.dto.ShoppingTaskDto;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -40,6 +41,21 @@ public class ShoppingTaskDeleteServiceTest {
 
     // attempt to delete
     service.delete();
+
+    List<ShoppingTask> all = repository.findAll();
+
+    Assertions.assertEquals(0, all.size());
+  }
+
+  @Test
+  public void givenRequestToDeleteItem_whenDelete_noItemInDb() {
+    // save test data
+    ShoppingTask task = new ShoppingTask(new ItemToBuy("test"), new TaskExecutionDate(LocalDateTime.now().plusDays(1)), NotificationStatusModel.REPORTED);
+    repository.save(task);
+    Assertions.assertEquals(1, repository.findAll().size());
+
+    // attempt to delete
+    service.delete(new ShoppingTaskDto(task.getId(), task.getItemToBuy().getName(), task.getExecutionDate().toString()));
 
     List<ShoppingTask> all = repository.findAll();
 
