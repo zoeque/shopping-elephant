@@ -48,4 +48,20 @@ public class ShoppingTaskControllerTest {
               .andExpect(status().isOk());
     });
   }
+
+  @Test
+  public void sendDropRequestWithSpecifiedDto_controllerReturns200Ok(){
+    Assertions.assertDoesNotThrow(() -> {
+      String testDate = "2999/12/31 23:59:59";
+
+      ShoppingTaskDto jsonDto = new ShoppingTaskDto(Long.valueOf(1), "test", testDate);
+
+      String json = objectMapper.writeValueAsString(jsonDto);
+
+      mvc.perform(post("/drop")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(json))
+              .andExpect(status().isOk());
+    });
+  }
 }
