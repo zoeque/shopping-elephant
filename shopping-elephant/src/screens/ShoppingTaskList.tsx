@@ -2,6 +2,8 @@ import { FC, useCallback, useEffect, useState } from "react";
 import "../App.css"
 import axios from "axios";
 import { Link } from "react-router-dom";
+import DropButton from '../component/DropButton'
+import { sendDropRequest } from '../controller/ShoppingTaskDropController';
 
 const isError = (error: unknown): error is Error => {
   return error instanceof Error;
@@ -17,6 +19,7 @@ export const ShoppingTaskList: FC = () => {
 
   const [item, setItem] = useState<ShoppingTask[]>([]);
   const [error, setError] = useState<Error | undefined>(undefined);
+  const [message, setMessage] = useState<string>('');
 
 
   if (error) {
@@ -51,12 +54,22 @@ export const ShoppingTaskList: FC = () => {
             <th>ID</th>
             <th>品名</th>
             <th>購入予定日</th>
+            <th>操作</th>
           </tr>
           {item.map((shoppingTask) => (
             <tr>
               <td>{shoppingTask.identifier}</td>
               <td>{shoppingTask.itemName}</td>
               <td>{shoppingTask.executionDate}</td>
+              <td>
+                <DropButton
+                  identifier={shoppingTask.identifier}
+                  itemName={shoppingTask.itemName}
+                  executionDate={shoppingTask.executionDate}
+                  sendDropRequest={sendDropRequest}
+                  setMessage={setMessage}
+                />
+              </td>
             </tr>
           ))}
         </table>
