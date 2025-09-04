@@ -16,43 +16,30 @@ interface DropButtonProps {
     setMessage: (message: string) => void; 
 }
 
-function DropButton({ 
-    identifier, itemName, executionDate, sendPostRequest 
-}:{
-    identifier: Int16Array;
-    itemName: string;
-    executionDate: string;
-    sendPostRequest: (identifier: Int16Array, itemName: string, executionDate: string) => void;
-}) {
-
-    const [message, setMessage] = useState('');
-    const validateInputName = (itemName: string) => {
-        if (itemName == '') {
-            setMessage('名前を入力してください。');
-            return false;
-        }
-        return true;
-    };
+function DropButton({
+    identifier,
+    itemName,
+    executionDate,
+    sendDropRequest,
+    setMessage,
+}: DropButtonProps) {
     function clickButton() {
         try {
-            if (!validateInputName(itemName)) {
-                return;
-            }
-            sendPostRequest(identifier, itemName, executionDate);
-            setMessage(itemName + 'を削除しました。')
+            // send the drop request to the controller
+            sendDropRequest(identifier, itemName, executionDate);
+            // set the message to indicate success
+            setMessage(`${itemName}を削除しました。`); 
         } catch (e) {
-            setMessage("予期せぬエラーが発生しました。エラー：" + e);
+            // handle error and set the message
+            setMessage(`予期せぬエラーが発生しました。エラー：${e}`); 
         }
-    };
-    return (
-        <div className="card">
-            <button onClick={clickButton}>
-                削除
-            </button>
-            {message && <p className="read-the-docs">{message}</p>}
-        </div>
+    }
 
+    return (
+        <div className="dropbutton">
+            <button onClick={clickButton}>削除</button>
+        </div>
     );
-};
+}
 
 export default DropButton;
