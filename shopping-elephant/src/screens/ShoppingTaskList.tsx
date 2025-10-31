@@ -48,6 +48,7 @@ export const ShoppingTaskList: FC = () => {
     <div>
       <h2>一覧表示</h2>
       <Link to="/">戻る</Link>
+      {message && <p>{message}</p>}
       <div onLoad={fetchShoppingTask}>
         <table className="table">
           <tr>
